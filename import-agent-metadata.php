@@ -1,4 +1,4 @@
-<?php
+<?php  declare(strict_types=1);
 /**
  * Plugin Name:     Import Agent Metadata
  * Plugin URI:      http://github.com/nmenescardi/Import-Agent-Metadata
@@ -14,4 +14,7 @@
 
   require_once 'vendor/autoload.php';
 
-  $scvFile = new \IAM\SCVFile(); 
+  use \IAM\IAM;
+ 
+  $iam_plugin = new IAM( plugin_dir_path( __FILE__ ) ); 
+  
