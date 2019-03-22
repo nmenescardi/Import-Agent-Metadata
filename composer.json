@@ -1,0 +1,15 @@
+{
+    "name": "nicolas/import-agent-metadata",
+    "authors": [
+        {
+            "name": "Nicolas Menescardi",
+            "email": "nicolasmenescardi@hotmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "IAM\\": "src"
+        }
+    }
+}

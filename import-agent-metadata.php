@@ -12,4 +12,6 @@
  * @package         Import_Agent_Metadata
  */
 
- 
+  require_once 'vendor/autoload.php';
+
+  $scvFile = new \IAM\SCVFile(); 
