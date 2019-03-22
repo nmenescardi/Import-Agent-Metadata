@@ -1,4 +1,4 @@
-<?php  declare(strict_types=1);
+<?php
 /**
  * Plugin Name:     Import Agent Metadata
  * Plugin URI:      http://github.com/nmenescardi/Import-Agent-Metadata
@@ -16,5 +16,10 @@
 
   use \IAM\IAM;
  
-  $iam_plugin = new IAM( plugin_dir_path( __FILE__ ) ); 
-  
+  try{
+
+    $iam_plugin = new IAM( plugin_dir_path( __FILE__ ) ); 
+    
+  } catch( Exception $e ) {
+    
+  }
