@@ -32,23 +32,36 @@ class IAM {
   public function process(){
     $rows = $this->processCSVFile();
 
-    $this->updateDB( $rows );
+    if ( false !== $rows ) {
+      $this->updateDB( $rows );
+    } else {
+      $this->logger->logInfo('the DB was already updated.');
+    }
   }
   
   private function processCSVFile(){
 
-    $rows = $this->getTransientCSV();
-    if( empty( $rows ) ) {
-      $rows = $this->csv_file->getRows();
-      $this->setTransientCSV($rows);
+    // IF the DB was updated it doesn't repeat the process.
+    if( self::TRANSIENT_DB_UPDATED_LABEL !== $this->getTransientDB() ) {
 
-      $this->logger->logInfo('Transient Expired. Reading CSV successfully');
-    } else {
-      
-      $this->logger->logInfo('Returning rows in Transient');
+      $rows = $this->getTransientCSV();
+
+      if( empty( $rows ) ) {
+
+        $rows = $this->csv_file->getRows();
+        $this->setTransientCSV($rows);
+
+        $this->logger->logInfo('Transient Expired. Reading CSV successfully');
+      } else {
+
+        $this->logger->logInfo('Returning rows in Transient');
+      }
+
+      return $rows;
+
     }
 
-    return $rows;
+    return false;
   }
 
   
@@ -98,7 +111,7 @@ class IAM {
         }
 
         $this->setTransientDB( self::TRANSIENT_DB_UPDATED_LABEL );
-        
+
       }
     }
   }
