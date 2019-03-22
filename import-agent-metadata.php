@@ -19,7 +19,7 @@
   try{
 
     $iam_plugin = new IAM( plugin_dir_path( __FILE__ ) ); 
-    
+    $iam_plugin->process();
   } catch( Exception $e ) {
     
   }
