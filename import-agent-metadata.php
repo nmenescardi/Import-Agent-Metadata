@@ -13,12 +13,13 @@
  */
 
   require_once 'vendor/autoload.php';
-
+  require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+  
   use \IAM\IAM;
  
   try{
 
-    $iam_plugin = new IAM( plugin_dir_path( __FILE__ ) ); 
+    $iam_plugin = new IAM( plugin_dir_path( __FILE__ ), plugin_basename( __FILE__ )  ); 
     $iam_plugin->process();
   } catch( Exception $e ) {
     
