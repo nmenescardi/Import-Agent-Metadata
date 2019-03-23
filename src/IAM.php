@@ -9,10 +9,6 @@ class IAM {
 
   const TRANSIENT_CSV_ROWS = 'csv_rows_processed';
   const TRANSIENT_EXPIRATION_CSV = 'HOUR_IN_SECONDS';
-/* 
-  const TRANSIENT_DB_UPDATED = 'agent_id_updated';
-  const TRANSIENT_EXPIRATION_DB_UPDATED = 'HOUR_IN_SECONDS';
-  const TRANSIENT_DB_UPDATED_LABEL = 'AGENT_ID_UPDATED'; */
 
   private $plugin_path;
   private $plugin_file_path;
@@ -28,9 +24,6 @@ class IAM {
     $this->logger = new IAMLogger( $plugin_path ); 
 
     $this->csv_file = new CSVFile( $plugin_path . 'csv/to-process.csv');
-
-    delete_transient( self::TRANSIENT_CSV_ROWS );
-    //delete_transient( self::TRANSIENT_DB_UPDATED );
     
   }
 
@@ -47,10 +40,6 @@ class IAM {
   }
   
   private function processCSVFile(){
-
-    // IF the DB was updated it doesn't repeat the process.
-    //if( self::TRANSIENT_DB_UPDATED_LABEL !== $this->getTransientDB() ) {
-
       $rows = $this->getTransientCSV();
 
       if( empty( $rows ) ) {
@@ -65,10 +54,6 @@ class IAM {
       }
 
       return $rows;
-
-    //}
-
-    //return false;
   }
 
   
@@ -104,7 +89,6 @@ class IAM {
       $userId = $agent[0];
       $id = $this->get_post_id_by_meta_key_and_value( 'our_ao-aema', $email );
     
-     // if ( false !== $id && '' !== $id && self::TRANSIENT_DB_UPDATED_LABEL !== $this->getTransientDB() ) {
       if ( false !== $id && '' !== $id ) {
 
         if( add_post_meta( $id, 'our_ao-userid', $userId, true ) ) {
@@ -117,9 +101,6 @@ class IAM {
 
           $this->logger->logInfo( 'User ID updated for user: ' . $userId . ' - ' . $id . ' - ' . $email . ' - ' . $name);
         }
-
-       // $this->setTransientDB( self::TRANSIENT_DB_UPDATED_LABEL );
-
       }
     }
   }
@@ -131,15 +112,6 @@ class IAM {
   private function setTransientCSV( $payload ){
     set_transient( self::TRANSIENT_CSV_ROWS, $payload, self::TRANSIENT_EXPIRATION_CSV );
   }
-/* 
-  private function getTransientDB(){
-    return get_transient( self::TRANSIENT_DB_UPDATED );
-  }
-
-  private function setTransientDB( $payload ){
-    set_transient( self::TRANSIENT_DB_UPDATED, $payload, self::TRANSIENT_EXPIRATION_DB_UPDATED );
-  }
- */
 
   public static function getLogger(){
     return $this->logger;
