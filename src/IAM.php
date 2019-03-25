@@ -24,7 +24,8 @@ class IAM {
     $this->logger = new IAMLogger( $plugin_path ); 
 
     $this->csv_file = new CSVFile( $plugin_path . 'csv/to-process.csv');
-    
+
+    register_activation_hook( $this->plugin_file_path , array( $this, 'process' ) );
   }
 
   public function process(){
@@ -36,7 +37,7 @@ class IAM {
       $this->logger->logInfo('the DB was already updated.');
     }
 
-    deactivate_plugins( $this->plugin_file_path );
+    //deactivate_plugins( $this->plugin_file_path );
   }
   
   private function processCSVFile(){

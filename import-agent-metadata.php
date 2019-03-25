@@ -18,5 +18,5 @@
   use \IAM\IAM;
  
   $iam_plugin = new IAM( plugin_dir_path( __FILE__ ), plugin_basename( __FILE__ )  ); 
-  $iam_plugin->process();
+  //$iam_plugin->process();
   
