@@ -12,3 +12,5 @@ node_modules/
 /vendor/
 /csv/
 /logs/
+
+*.csv
